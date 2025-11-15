@@ -1,0 +1,20 @@
+<ul>
+{% for item in menu_items %}
+    {% with url=item.named_url|default:item.url %}
+        {% if url %}
+            {% if url == active_path %}
+                <li><a href="{{ url }}" class="active">{{ item.title }}</a></li>
+            {% else %}
+                <li>
+                    <a href="{{ url }}" {% if item.open_in_new_tab %}target="_blank"{% endif %}>{{ item.title }}</a>
+                    {% if item.id in expanded_ids and item.children_list %}
+                        <ul>
+                            {% include "menu/draw_menu.html" with menu_items=item.children_list expanded_ids=expanded_ids active_path=active_path %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endwith %}
+{% endfor %}
+</ul>

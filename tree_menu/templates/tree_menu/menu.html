@@ -1,0 +1,30 @@
+<ul class="tree-menu" data-menu-name="{{ menu_name }}">
+  {% for node in roots %}
+    {% include "tree_menu/_node.html" with node=node %}
+  {% endfor %}
+</ul>
+
+
+<script type="module">
+  document.querySelectorAll('.tree-menu').forEach(menu => {
+    menu.addEventListener('click', (e) => {
+      const btn = e.target.closest('button.toggle');
+      if (!btn) return;
+      const li = btn.closest('li');
+      if (!li) return;
+      const children = li.querySelector('.children');
+      if (!children) return;
+
+      const isHidden = children.hasAttribute('hidden');
+      if (isHidden) {
+        children.removeAttribute('hidden');
+        btn.textContent = '▾';
+        li.classList.add('expanded');
+      } else {
+        children.setAttribute('hidden', '');
+        btn.textContent = '▸';
+        li.classList.remove('expanded');
+      }
+    });
+  });
+</script>

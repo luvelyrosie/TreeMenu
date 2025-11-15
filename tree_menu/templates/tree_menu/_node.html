@@ -1,0 +1,14 @@
+<li class="{% if node.active %}active{% endif %}">
+  <a class="nav-link" href="{{ node.resolved_url }}">
+    {{ node.title }}
+  </a>
+
+  {% if node.children %}
+    <button class="toggle">{% if node.open %}▾{% else %}▸{% endif %}</button>
+    <ul class="children" {% if not node.open %}hidden{% endif %}>
+      {% for child in node.children %}
+        {% include "tree_menu/_node.html" with node=child %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</li>

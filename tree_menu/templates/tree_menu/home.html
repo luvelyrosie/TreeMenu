@@ -1,0 +1,56 @@
+{% extends "tree_menu/base.html" %}
+{% load draw_menu %}
+{% load static %}
+
+{% block content %}
+<div class="text-center mb-5 mt-4">
+  <h1 class="fw-bold text-dark">Welcome to <span class="accent-text">The Flavor Tree</span></h1>
+  <p class="text-muted">Discover your next favorite meal — breakfast, lunch, or dinner, beautifully displayed below.</p>
+</div>
+
+<section class="menu-showcase">
+  {% for item in menu_items %}
+  <div class="hero-card row align-items-center mb-5">
+
+    <div class="col-lg-6 hero-left">
+      <h1 class="hero-title">
+        <a href="{{ item.get_resolved_url }}" class="menu-link" {% if item.open_in_new_tab %}target="_blank"{% endif %}>
+          {{ item.title }}
+        </a>
+      </h1>
+      <p class="hero-sub">Navigate through nested menus effortlessly.</p>
+    </div>
+
+    <div class="col-lg-6 hero-right position-relative">
+      <div class="plate-outer">
+        <a href="{{ item.get_resolved_url }}" {% if item.open_in_new_tab %}target="_blank"{% endif %}>
+          <img class="plate"
+               src="{% if item.image %}{{ item.image }}{% else %}{% static 'tree_menu/default_food.jpg' %}{% endif %}"
+               alt="{{ item.title }}">
+        </a>
+      </div>
+
+      <div class="orbit orbit-1">
+        <img src="{% static 'tree_menu/orbit_1.jpg' %}" alt="orbit img">
+      </div>
+      <div class="orbit orbit-2">
+        <img src="{% static 'tree_menu/orbit_2.jpg' %}" alt="orbit img">
+      </div>
+      <div class="orbit orbit-3">
+        <img src="{% static 'tree_menu/orbit_3.jpg' %}" alt="orbit img">
+      </div>
+      <div class="orbit orbit-4">
+        <img src="{% static 'tree_menu/orbit_4.jpg' %}" alt="orbit img">
+      </div>
+    </div>
+
+  </div>
+  {% empty %}
+    <p class="text-center text-muted">No menu items found. Add some in the admin panel.</p>
+  {% endfor %}
+</section>
+
+<section class="menu-card mt-4">
+  {% draw_menu 'main_menu' %}
+</section>
+{% endblock %}
