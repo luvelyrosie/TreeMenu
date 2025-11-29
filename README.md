@@ -1,5 +1,192 @@
 # Django Tree Menu App
 
+A full-featured Django application for displaying a tree-structured menu using a template tag. The menu is stored in the database, editable through the standard Django admin, and determines the active item based on the current URL. The project fully meets the requirements of the test assignment.
+
+## Implemented Requirements
+
+1. Menu is rendered via template tag: `{% draw_menu 'main_menu' %}`
+2. All items above the active one are expanded
+3. First-level children under the active item are expanded
+4. All data is stored in the database
+5. Editable via Django Admin
+6. Multiple menus can exist on a page (identified by name)
+7. Supports both direct URLs and named URLs
+8. Rendering the menu executes exactly **one** DB query
+9. Uses only Django and Python standard library
+
+---
+
+# Running the Project
+
+Two options are supported:
+
+* **Docker (recommended)** — fast and convenient
+* Local run — if needed
+
+---
+
+# Running via Docker (recommended)
+
+## 1. Install Docker
+
+[https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+## 2. Clone the repository
+
+```
+git clone https://github.com/luvelyrosie/TreeMenu.git
+cd TreeMenu
+```
+
+## 3. Run
+
+```
+docker-compose up --build
+```
+
+Docker will automatically:
+
+* create containers
+* apply migrations
+* create a superuser:
+
+**Login:** admin
+**Password:** admin
+**Email:** [admin@example.com](mailto:admin@example.com)
+
+---
+
+# Accessing the Application
+
+Application:
+[http://localhost:8000/](http://localhost:8000/)
+
+Admin:
+[http://localhost:8000/admin/](http://localhost:8000/admin/)
+
+---
+
+# Creating Menu Items
+
+To display the menu on the main page, create a menu item in the admin with the field:
+
+`Menu = main_menu`
+
+### MenuItem Fields Description:
+
+#### **Menu**
+
+Menu name (e.g., **main_menu** to display on the main page).
+
+#### **Title**
+
+Displayed text of the item.
+
+#### **Parent**
+
+Optional. Allows nesting.
+
+#### **URL**
+
+Direct URL (e.g., `/`). Leave empty if using named URL.
+
+#### **Named URL**
+
+Django route name (e.g., `home`).
+
+#### **Named URL kwargs**
+
+Parameters, example:
+
+```
+{"id": 5}
+```
+
+#### **Order**
+
+Sorting order (lower = higher).
+
+#### **Open in new tab**
+
+Open link in a new tab.
+
+#### **Image**
+
+Optional image. Defaults used if not specified.
+
+---
+
+# Usage in Templates
+
+```
+{% load draw_menu %}
+{% draw_menu 'main_menu' %}
+```
+
+---
+
+# Local Run (without Docker)
+
+## 1. Clone
+
+```
+git clone https://github.com/luvelyrosie/TreeMenu.git
+cd TreeMenu
+```
+
+## 2. Create virtual environment
+
+```
+python -m venv venv
+source venv/bin/activate      # Linux/Mac
+venv\Scripts\activate       # Windows
+cd TreeMenu
+```
+
+## 3. Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+## 4. Run PostgreSQL manually
+
+## 5. Migrations
+
+```
+python manage.py migrate
+```
+
+## 6. Create superuser
+
+```
+python manage.py createsuperuser
+```
+
+## 7. Run server
+
+```
+python manage.py runserver
+```
+
+---
+
+# Features
+
+* Fully dynamic tree menu
+* Stored in DB
+* Auto-highlight active item
+* 1 SQL query per menu
+* Supports named URL and kwargs
+* Convenient admin interface
+* Production-ready in Docker
+
+
+
+
+
+# Django Tree Menu App
+
 Полнофункциональное Django‑приложение для отображения древовидного меню с использованием template tag. Меню хранится в базе данных, редактируется через стандартную админку Django и определяет активный пункт по текущему URL. Проект полностью соответствует требованиям тестового задания.
 
 ## Реализованные требования
